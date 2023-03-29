@@ -1,16 +1,51 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-let routes = [
+let routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    redirect: "/home/recommended",
+  },
+  {
+    path: "/home",
     name: "home",
-    component: () => import("@/view/home.vue"),
+    component: () => import("@/view/home/home.vue"),
+    children: [
+      {
+        path: "song",
+        name: "song",
+        component: () => import("@/view/home/song.vue"),
+      },
+      {
+        path: "recommended",
+        name: "recommended",
+        component: () => import("@/view/home/recommended/recommended.vue"),
+      },
+      {
+        path: "singer",
+        name: "singer",
+        component: () => import("@/view/home/singer.vue"),
+      },
+      {
+        path: "shelves",
+        name: "shelves",
+        component: () => import("@/view/home/shelves.vue"),
+      },
+    ],
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("@/view/login.vue"),
+  },
+  {
+    path: "/player",
+    name: "login",
+    component: () => import("@/view/player.vue"),
   },
 ];
-// 路由
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-// 导出
+
 export default router;

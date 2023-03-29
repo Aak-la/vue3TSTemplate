@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    /*  "declaration": true, */
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -14,7 +15,9 @@
     "noEmit": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
+      "@/*":["src/*"],
+      "components":["src/components/*"],
+      "_pinia/*":["src/pinia/*"]
     }, 
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "./auto-imports.d.ts"],
