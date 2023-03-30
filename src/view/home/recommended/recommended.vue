@@ -78,9 +78,9 @@ const getHotAlbumData = () => {
   });
 };
 const getTopListData = () => {
-  getTopList(3).then((res) => {
+ /*  getTopList(3).then((res) => {
     console.log(res);
-  });
+  }); */
 };
 </script>
 <style scoped lang="scss">

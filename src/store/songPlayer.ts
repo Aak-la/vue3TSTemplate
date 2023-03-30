@@ -4,13 +4,16 @@ export const songState = defineStore("song", {
   state: () => {
     return {
       musicState: false,
-      palySong: "",
+      SongHttp: undefined,
     };
   },
   getters: {},
   actions: {
     changeMusicState(value: boolean) {
       this.musicState = value;
+    },
+    setSongUrl(value: any) {
+      this.SongHttp = value;
     },
   },
 });

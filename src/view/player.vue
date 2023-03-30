@@ -1,6 +1,11 @@
 <template>
   <div class="player-container">
     <div class="player-content">
+      <div class="search">
+        <input type="text" v-model="searchWord" /><button @click="searchSong">
+          搜索
+        </button>
+      </div>
       <div class="content-outer">
         <img
           src="https://img1.baidu.com/it/u=579108611,1930705942&fm=253&fmt=auto&app=138&f=JPEG?w=200&h=200"
@@ -10,32 +15,34 @@
         <div class="content-in"></div>
       </div>
     </div>
-
-    <div class="player-control">
-      <div @click="start" v-if="!musicState">
-        <svg-icon name="start" width="2em" height="2em" />
-      </div>
-      <div @click="stop" v-else>
-        <svg-icon name="stop" width="2em" height="2em" />
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { search } from "@/api/song";
 import { songState } from "@/store/songPlayer";
+let searchWord = ref<string>("ok歌");
 const store = songState();
 const { musicState } = storeToRefs(store);
-let audio = new Audio(
-  "https://music.163.com/song/media/outer/url?id=33894312.mp3"
-);
-const start = () => {
-  store.changeMusicState(true);
-  audio.play();
+
+const searchSong = () => {
+
+  if (searchWord.value == null) return;
+  search(searchWord.value)
+    .then((res: any) => {
+      let id = res.result.songs[0].id;
+      store.setSongUrl(getUrl(id));
+      store.changeMusicState(true);
+    })
+    .catch((err) =>
+      ElMessage({
+        message: "有错误发生",
+        type: "warning",
+      })
+    );
 };
-const stop = () => {
-  store.changeMusicState(false);
-  audio.pause();
+const getUrl = (id: number) => {
+  return ` "https://music.163.com/song/media/outer/url?id=${id}.mp3"`;
 };
 </script>
 
@@ -84,16 +91,6 @@ const stop = () => {
         z-index: 99;
       }
     }
-  }
-  .player-control {
-    width: 100%;
-    height: 60px;
-    position: fixed;
-    bottom: 0;
-    background-color: #1e1e1e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 </style>

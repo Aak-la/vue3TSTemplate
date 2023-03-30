@@ -1,13 +1,12 @@
 import { httpClient } from "./index";
-import { GET_HOT_PLAYLIST, GET_BANNERS } from "./requestType";
 import { BannerType } from "@/types/index";
 
 export const getBannerList = async (type: BannerType) => {
-  return await httpClient.get(GET_BANNERS, { type });
+  return await httpClient.get("/banner", { type });
 };
 
 export const httpGetHotPlayList = async (limit: number) => {
-  const res: any = await httpClient.get(GET_HOT_PLAYLIST, { limit });
+  const res: any = await httpClient.get("/playlist/hot", { limit });
   return {
     ...res,
     result: res.result.map((item: any) => {
